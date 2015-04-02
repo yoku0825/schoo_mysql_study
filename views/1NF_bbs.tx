@@ -1,0 +1,13 @@
+: cascade base
+: around content -> {
+<h1>スレッド一覧</h1>
+<ul>
+:   for $thread_list -> $thread {
+  <li>
+    <b><: $thread.thread_title :></b> created by <: $thread.thread_owner :> at <: $thread.thread_created :><br>
+    <pre style="background-color: ghostwhite;"><: $thread.comments :></pre>
+  </li>
+:   }
+</ul>
+: }
+
