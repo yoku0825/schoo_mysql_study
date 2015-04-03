@@ -23,12 +23,9 @@ for (my $n = 1; $n < 10; $n++)
                          rand_virtual_name());
   }
 
-  $conn->do("INSERT INTO bbs SET thread_title = ?, " .
-            "                    thread_owner = ?, " .
-            "                    thread_owner_email = ?, " .
-            "                    thread_created = ?, " .
-            "                    comments = ?",
-            undef, $thread_title, $thread_owner, $thread_owner_email, $thread_created, $comments);
+  $comments =~ s/\n\n$//;
+  $conn->do("INSERT IGNORE INTO 0NF_bbs VALUES (?, ?, ?, ?, ?)", undef,
+            $thread_title, $thread_owner, $thread_owner_email, $thread_created, $comments);
 }
     
 exit 0;

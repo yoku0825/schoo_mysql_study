@@ -4,7 +4,7 @@
 <ul>
 :   for $thread_list -> $thread {
   <li>
-    <b><: $thread.thread_title :></b> created by <: $thread.thread_owner :> at <: $thread.thread_created :><br>
+    <b><: $thread.thread_title :></b> created by <: $thread.thread_owner :> < <: $thread.thread_owner_email :> > at <: $thread.thread_created :><br>
     <pre style="background-color: ghostwhite;"><: $thread.comments :></pre>
   </li>
 :   }

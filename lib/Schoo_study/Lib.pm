@@ -1,7 +1,7 @@
 package Schoo_study::Lib;
 
 use Exporter qw/import/;
-our @EXPORT= qw/thread_list/;
+our @EXPORT= qw/make_array/;
 
 use strict;
 use warnings;
@@ -16,10 +16,10 @@ sub conn
 }
 
 
-sub thread_list
+sub make_array
 {
-  my ($sql)= @_;
-  my $ret= conn->selectall_arrayref($sql, {Slice => {}});;
+  my ($sql, @args)= @_;
+  my $ret= conn->selectall_arrayref($sql, {Slice => {}}, @args);;
 
   return $ret;
 }
