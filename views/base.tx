@@ -25,7 +25,7 @@ body {
 <a class="brand" href="<: $c.req.uri_for('/') :>">Schoo_study</a>
 <div class="nav-collapse">
 <ul class="nav">
-: my $navigations= ["0NF", "1NF", "1NF_more", "2NF"];
+: my $navigations= ["0NF", "1NF", "1NF_more", "2NF", "3NF"];
 :   for $navigations -> $navigation {
   <li class="<: 'active' if $c.stash.me == $navigation :>"><a href="/<: $navigation :>"><: $navigation :></a></li>
 : }

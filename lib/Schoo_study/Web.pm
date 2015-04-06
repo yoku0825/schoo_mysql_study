@@ -9,6 +9,12 @@ use Plack::Request;
 use Data::Dumper;
 
 
+get "/" => sub
+{
+  my ($self, $c)= @_;
+  $c->render("0NF.tx", {});
+};
+
 get "/0NF" => sub
 {
   my ($self, $c)= @_;
@@ -83,6 +89,26 @@ get "/2NF" => sub
   $c->render("2NF.tx", {thread_list => make_array($thread_list_sql)});
 };
 
+get "/3NF" => sub
+{
+  my ($self, $c)= @_;
+  my $thread_list_sql= "SELECT main.thread_title, main.thread_owner, " .
+                         "user.user_email AS thread_owner_email, meta.thread_created, " .
+                         "GROUP_CONCAT(CONCAT(main.comment_number, ': ', " .
+                                             "main.comment_owner, ' <', " .
+                                             "comment_user.user_email, '> ', " .
+                                             "main.comment_created, '\\n', " .
+                                             "main.comment_body, '\\n') SEPARATOR '\\n') AS comments " .
+                       "FROM 3NF_bbs_main AS main " .
+                         "INNER JOIN 3NF_thread_metadata AS meta USING(thread_title, thread_owner) " .
+                         "INNER JOIN 3NF_user_email AS user ON main.thread_owner= user.user_name " .
+                         "INNER JOIN 3NF_user_email AS comment_user ON main.comment_owner= comment_user.user_name " .
+                       "GROUP BY thread_title, thread_owner, " .
+                         "user.user_email, thread_created " .
+                       "ORDER BY thread_created DESC, thread_title DESC";
+  $c->stash->{me}= "3NF";
+  $c->render("3NF.tx", {thread_list => make_array($thread_list_sql)});
+};
 
 
 return 1;

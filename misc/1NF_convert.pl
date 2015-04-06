@@ -6,6 +6,18 @@ use DBI;
 
 my $conn= DBI->connect("dbi:mysql:mydb;mysql_socket=/usr/mysql/5.7.6/data/mysql.sock",
                        "root", "");
+$conn->do("CREATE TABLE IF NOT EXISTS 1NF_bbs (" .
+            "thread_title VARCHAR(255) NOT NULL, " .
+            "thread_owner VARCHAR(255) NOT NULL, " .
+            "thread_owner_email VARCHAR(255) NOT NULL, " .
+            "thread_created DATETIME NOT NULL, " .
+            "comment_number INT UNSIGNED NOT NULL, " .
+            "comment_owner VARCHAR(255) NOT NULL, " .
+            "comment_owner_email VARCHAR(255) NOT NULL, " .
+            "comment_created DATETIME NOT NULL, " .
+            "comment_body LONGTEXT NOT NULL, " .
+            "PRIMARY KEY (thread_title, thread_owner, comment_number))");
+
 
 foreach my $row (@{$conn->selectall_arrayref("SELECT * FROM 0NF_bbs", {Slice => {}})})
 {

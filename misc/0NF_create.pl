@@ -7,6 +7,13 @@ use DBI;
 
 my $conn= DBI->connect("dbi:mysql:mydb;mysql_socket=/usr/mysql/5.7.6/data/mysql.sock",
                        "root", "");
+$conn->do("CREATE TABLE IF NOT EXISTS 0NF_bbs (" .
+            "thread_title VARCHAR(255) NOT NULL, " .
+            "thread_owner VARCHAR(255) NOT NULL, " .
+            "thread_owner_email VARCHAR(255) NOT NULL, " .
+            "thread_created DATETIME NOT NULL, " .
+            "comments LONGTEXT NOT NULL, " .
+            "PRIMARY KEY (thread_title, thread_owner))");
 
 for (my $n = 1; $n < 10; $n++)
 {
