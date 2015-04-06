@@ -5,14 +5,12 @@ use warnings;
 use utf8;
 use Kossy;
 use Schoo_study::Lib;
-use Plack::Request;
-use Data::Dumper;
 
 
 get "/" => sub
 {
   my ($self, $c)= @_;
-  $c->render("0NF.tx", {});
+  $c->render("base.tx", {});
 };
 
 get "/0NF" => sub
@@ -109,6 +107,18 @@ get "/3NF" => sub
   $c->stash->{me}= "3NF";
   $c->render("3NF.tx", {thread_list => make_array($thread_list_sql)});
 };
+
+### get "/log" => sub
+### {
+###   my ($self, $c)= @_;
+### 
+###   open(my $log, "< log/access.log");
+###   my @log_lines= <$log>;
+###   $c->stash->{log}= \@log_lines;
+###   close($log);
+### 
+###   $c->render("log.tx");
+### };
 
 
 return 1;
