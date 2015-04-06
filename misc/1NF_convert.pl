@@ -27,13 +27,16 @@ foreach my $row (@{$conn->selectall_arrayref("SELECT * FROM 0NF_bbs", {Slice => 
                        :\s
                        (?<comment_owner>.+)
                        \s
+                       < (?<comment_owner_email>.+) >
+                       \s
                        (?<comment_created>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})
                        \n
                        (?<comment_body>.+)$/x;
-    my $sql= "INSERT INTO 1NF_bbs VALUES (?, ?, ?, ?, ?, ?, 'sage', ?, ?)";
+    my $sql= "INSERT INTO 1NF_bbs VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $conn->do($sql, undef, $row->{thread_title}, $row->{thread_owner},
                            $row->{thread_owner_email}, $row->{thread_created},
                            $+{comment_number}, $+{comment_owner},
+                           $+{comment_owner_email},
                            $+{comment_created}, $+{comment_body});
   }
 }

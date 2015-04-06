@@ -20,19 +20,23 @@ for (my $n = 1; $n < 10; $n++)
   my $thread_title      = rand_virtual_name();
   my $thread_owner      = "yoku0825";
   my $thread_owner_email= "sage";
-  my $thread_created    = Time::Piece::localtime->strftime("%Y-%m-%d %H:%M:%S");
+  my $now               = Time::Piece::localtime;
+  my $dummy             = Time::Seconds->new(rand(365 * 24 * 60 * 60));
+  my $thread_created    = $now + $dummy;
   my $comments          = "";
 
   for (my $m = 1; $m < rand(100); $m++)
   {
-    $comments .= sprintf("%d: 名無しさん %s\n%s\n\n",
-                         $m, Time::Piece::localtime->strftime("%Y-%m-%d %H:%M:%S"),
-                         rand_virtual_name());
+    my $dummy2         = Time::Seconds->new($m);
+    my $comment_created= $thread_created + $dummy2;
+    $comments .= sprintf("%d: 名無しさん < sage > %s\n%s\n\n",
+                         $m, $comment_created->strftime("%Y-%m-%d %H:%M:%S"), rand_virtual_name());
   }
 
   $comments =~ s/\n\n$//;
   $conn->do("INSERT IGNORE INTO 0NF_bbs VALUES (?, ?, ?, ?, ?)", undef,
-            $thread_title, $thread_owner, $thread_owner_email, $thread_created, $comments);
+            $thread_title, $thread_owner, $thread_owner_email,
+            $thread_created->strftime("%Y-%m-%d %H:%M:%S"), $comments);
 }
     
 exit 0;
