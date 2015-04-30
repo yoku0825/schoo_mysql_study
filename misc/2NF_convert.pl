@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use DBI;
 
-my $conn= DBI->connect("dbi:mysql:mydb;mysql_socket=/usr/mysql/5.7.6/data/mysql.sock",
+my $conn= DBI->connect("dbi:mysql:mydb;mysql_socket=/usr/mysql/5.7.7/data/mysql.sock",
                        "root", "");
 $conn->do("CREATE TABLE IF NOT EXISTS 2NF_bbs_main (" .
             "thread_title VARCHAR(255) NOT NULL, " .

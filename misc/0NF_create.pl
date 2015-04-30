@@ -5,7 +5,7 @@ use warnings;
 use Time::Piece;
 use DBI;
 
-my $conn= DBI->connect("dbi:mysql:mydb;mysql_socket=/usr/mysql/5.7.6/data/mysql.sock",
+my $conn= DBI->connect("dbi:mysql:mydb;mysql_socket=/usr/mysql/5.7.7/data/mysql.sock",
                        "root", "");
 $conn->do("CREATE TABLE IF NOT EXISTS 0NF_bbs (" .
             "thread_title VARCHAR(255) NOT NULL, " .
@@ -47,5 +47,5 @@ sub rand_virtual_name
   my @a= ("コードギアス亡国の", "ジョジョの", "中二病でも", "アイドル", "恋と選挙と", "電波女と", "アウトブレイク", "ささみさん", "人類は", "テラ", "進撃の", "僕は友達が", "とある魔術の", "謎の", "殺人", "インフィニット", "魔法少女", "ガンダム", "13日の", "さんをつけろよ");
   my @b= ("アキト", "奇妙な冒険", "恋がしたい!", "マスター", "チョコレート", "青春男", "カンパニー", "＠がんばらない", "衰退しました", "フォーマーズ", "巨人", "少ない", "禁書目録", "彼女X", "教室", "ストラトス", "まどか☆マギカ", "UC[ユニコーン]", "金曜日", "デコ助野郎!");
 
-  return $a[rand($#a)] . $b[rand($#b)];
+  return $a[rand($#a + 1)] . $b[rand($#b + 1)];
 }
